@@ -1,0 +1,76 @@
+User
+====
+Request
+--------
+curl -X POST "http://localhost:5000/api/auth/register"  -H "Content-Type: application/json" -d '{"name": "Narasimha","email": "nara@gmail.com","password": "1234567890"}'
+
+Response
+--------
+{"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4OWM3NmYzZTU3Y2U0OTg5Mjg0YjhhNyIsImlhdCI6MTc1NTA4NDUzMSwiZXhwIjoxNzU1Njg5MzMxfQ.VRvudu77vI4AMUIbS7-zzflICBZvTcgy6Jklh97Jey4","user":{"id":"689c76f3e57ce4989284b8a7","name":"Narasimha","email":"nara@gmail.com"}}
+
+Request
+--------
+curl -X POST "http://localhost:5000/api/auth/login"  -H "Content-Type: application/json" -d '{"email": "nara@gmail.com","password": "1234567890"}'
+
+Response
+--------
+{"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4OWM3NmYzZTU3Y2U0OTg5Mjg0YjhhNyIsImlhdCI6MTc1NTA4NDU2MCwiZXhwIjoxNzU1Njg5MzYwfQ.8OjIpYN8p_jCwy1GRbDaukY4iV_6p_jfxQOtiklXfNg","user":{"id":"689c76f3e57ce4989284b8a7","name":"Narasimha","email":"nara@gmail.com"}}
+
+Request
+--------
+curl -X POST "http://localhost:5000/api/subscriptions/" -H "Content-Type: application/json" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4OWM3NmYzZTU3Y2U0OTg5Mjg0YjhhNyIsImlhdCI6MTc1NTA4NDU2MCwiZXhwIjoxNzU1Njg5MzYwfQ.8OjIpYN8p_jCwy1GRbDaukY4iV_6p_jfxQOtiklXfNg" -d '{"plan": "basic","startDate": "2025-08-13","endDate": "2025-09-13"}'
+
+Response
+--------
+{"message":"Subscription created","subscription":{"user":"689c76f3e57ce4989284b8a7","plan":"basic","status":"created","startDate":"2025-08-13T00:00:00.000Z","endDate":"2025-09-13T00:00:00.000Z","_id":"689c7ae7d6279e33e2b134f6","createdAt":"2025-08-13T11:45:43.333Z","updatedAt":"2025-08-13T11:45:43.333Z","__v":0}}
+
+Request
+--------
+curl -X GET http://localhost:5000/api/videos -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4OWM3NmYzZTU3Y2U0OTg5Mjg0YjhhNyIsImlhdCI6MTc1NTA4NDU2MCwiZXhwIjoxNzU1Njg5MzYwfQ.8OjIpYN8p_jCwy1GRbDaukY4iV_6p_jfxQOtiklXfNg"
+
+Response
+--------
+[{"_id":"689c863c6fdbf1bb61bb3a6f","title":"My Video","slug":"my-video","description":"Uploaded via curl","storageProvider":"LOCAL","fileKey":"1755088444086-Video_1.mp4","contentType":"application/octet-stream","categories":[],"isPremium":false,"views":0,"createdAt":"2025-08-13T12:34:04.102Z","updatedAt":"2025-08-13T12:34:04.102Z","__v":0}]
+
+
+Admin
+======
+Request
+--------
+curl -X POST "http://localhost:5000/api/auth/register" -H "Content-Type: application/json" -d '{"name": "Admin","email": "admin@gmail.com","password": "1234567890","role": "admin"}'
+
+Response
+--------
+NA
+
+Request
+--------
+curl -X POST "http://localhost:5000/api/auth/login"  -H "Content-Type: application/json" -d '{"email": "admin@gmail.com","password": "1234567890"}'
+
+Response
+--------
+{"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4OWM3ZjdmZDU1OTJlODdlZDRhNjdlYSIsImlhdCI6MTc1NTA4NjczMywiZXhwIjoxNzU1NjkxNTMzfQ.rVzu6Nz7xQGr9o7hdWHzefoHbbWTIEvZsCNsuFkuaXI","user":{"id":"689c7f7fd5592e87ed4a67ea","name":"Admin","email":"admin@gmail.com"}}
+
+Request
+--------
+curl -X POST "http://localhost:5000/api/categories/" -H "Content-Type: application/json" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4OWM3ZjdmZDU1OTJlODdlZDRhNjdlYSIsImlhdCI6MTc1NTA4NjczMywiZXhwIjoxNzU1NjkxNTMzfQ.rVzu6Nz7xQGr9o7hdWHzefoHbbWTIEvZsCNsuFkuaXI" -d '{"name": "Action"}'
+
+Response
+--------
+NA
+
+Request
+--------
+curl -X GET http://localhost:5000/api/admin/stats -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4OWM3ZjdmZDU1OTJlODdlZDRhNjdlYSIsImlhdCI6MTc1NTA4NjczMywiZXhwIjoxNzU1NjkxNTMzfQ.rVzu6Nz7xQGr9o7hdWHzefoHbbWTIEvZsCNsuFkuaXI"
+
+Response
+--------
+{"users":2,"videos":1,"categories":2}
+
+Request
+--------
+curl -X POST http://localhost:5000/api/admin/video/upload -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4OWM3ZjdmZDU1OTJlODdlZDRhNjdlYSIsImlhdCI6MTc1NTA4NjczMywiZXhwIjoxNzU1NjkxNTMzfQ.rVzu6Nz7xQGr9o7hdWHzefoHbbWTIEvZsCNsuFkuaXI" -F "video=@Video_1.mp4" -F "title=My Video" -F "description=Uploaded via curl"
+
+Response
+--------
+{"message":"Video uploaded","video":{"title":"My Video","slug":"my-video","description":"Uploaded via curl","storageProvider":"LOCAL","fileKey":"1755088444086-Video_1.mp4","contentType":"application/octet-stream","categories":[],"isPremium":false,"views":0,"_id":"689c863c6fdbf1bb61bb3a6f","createdAt":"2025-08-13T12:34:04.102Z","updatedAt":"2025-08-13T12:34:04.102Z","__v":0}}
